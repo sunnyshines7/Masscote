@@ -1,0 +1,73 @@
+page-analytics {
+	.accordion-list ion-list-header {
+		border-bottom: 10px solid transparent !important;
+		margin-bottom: 0px;
+		background: none !important; 
+		> .item-inner {
+			background-color: rgba(115, 228, 69, 0.29) !important;
+		}
+	}
+	.section {
+			margin-bottom: 4px;
+			padding-left: 16px;
+			padding: 10px;
+	}
+	.section-active {
+		background: #f9f9f9;
+    border-left-width: 5px;
+    border-style: solid;
+		border-image: linear-gradient(#0ec4b2 0%, #1dcfa2 51%, #2bd98e 75%) 1 100%;
+		padding: 10px;
+		padding-left: 10px;
+	}
+
+	.arrow-down-grad:before {
+    background: -webkit-linear-gradient(#0ec4b2 0%, #1dcfa2 51%, #2bd98e 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+	}
+
+	.arrow-right {
+		font-size: 1.6em;
+		color: #b5b5b5;
+	}
+
+	.item_list {
+		padding-left: 50px;
+		border-top: 2px solid #1bcda4 !important;
+		ion-item {
+			background: transparent;
+		}
+	}
+
+	.child-item {
+		padding: 5px;
+	}
+
+	.arrow-right-child {
+		color: #b5b5b5;
+		font-size: 1.3em;
+		margin-top: 5px !important;
+		margin-bottom: 0px !important;
+		margin-right: 5px !important;
+	}
+	
+	.label {
+			margin: 0px;
+	}
+	.list {
+			margin-bottom: 4px;
+	}
+
+	.card_head {
+		border-bottom: 1.5px solid #eee;
+		text-align: center;
+		font-size: 1.3em;
+		font-weight: 700;
+		padding: 20px;
+		margin-before: 0;
+		margin-after: 0;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+	}
+}

@@ -1,0 +1,65 @@
+page-photos {
+	.cross_mark {
+		position: absolute;
+    top: 0;
+    right: 0;
+		font-size: 2.2em;
+		display: none;
+	}
+	.gallery {
+		&:hover .cross_mark{
+			display: inherit !important;
+		}
+		img {
+			border: 1px solid transparent;
+    	border-radius: 5px;
+		}
+	}
+}
+
+.cond_btn1 {
+  // background-image: linear-gradient(141deg, #0ec4b2 0%, #1dcfa2 75%)
+  background-image: linear-gradient(141deg, #ffc444 0%, #f89d42 75%);
+}
+
+.cond_btn2 {
+  // background-image: linear-gradient(141deg, #1dcfa2 0%, #2bd98e 75%)
+  background-image: linear-gradient(141deg, #f89d42 0%, #66ac4a 75%)
+}
+
+.btn-group-or:after {
+  content: "OR";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 23px;
+  background: #FFF;
+  border-radius: 50%;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.btn-group-or button {
+  float: left;
+  width: 50% !important;
+  display: block;
+  margin: 0;
+}
+
+.btn-group-or button:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 2px solid #FFF;
+}
+
+.btn-group-or button:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 2px solid #FFF;
+}
+
+.btn-group-or {
+  position: relative;
+}

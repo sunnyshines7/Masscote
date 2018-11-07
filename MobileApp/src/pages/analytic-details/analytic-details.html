@@ -1,0 +1,2416 @@
+<!--
+  Generated template for the AnalyticDetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>{{page_name}}</ion-title>
+  </ion-navbar> -->
+  <ion-navbar hideBackButton>
+    <ion-buttons left> 
+      <button ion-button icon-only clear (click)="goBack()" style="color:#488aff">
+        Cancel
+      </button>
+    </ion-buttons>
+    <ion-title>{{page_name}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="saveToDB()" style="color:#488aff">
+        Save
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  
+  <!-- <ion-list class="input_box">
+    <ion-item>
+      <ion-label stacked class="large_label">Crop Name </ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">January</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">February</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+    </ion-list>
+    <ion-list class="input_box">
+    <ion-item>
+      <ion-label class="large_label">March</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="large_label">April</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item> -->
+    
+
+
+
+
+    <!-- <ion-item>
+      <ion-label stacked class="select_header">Crop value for indivual months</ion-label>
+    </ion-item>
+    <ion-item class="select_input">
+      
+      <ion-select [(ngModel)]="Months" interface="popover" >
+        <ion-option value="Jan">Jan</ion-option>
+        <ion-option value="Feb">Feb</ion-option>
+        <ion-option value="Mar">Mar</ion-option>
+        <ion-option value="genesis">Sega Genesis</ion-option>
+        <ion-option value="saturn">Sega Saturn</ion-option>
+        <ion-option value="snes">SNES</ion-option>
+      </ion-select>
+      <ion-input type="text"></ion-input>
+      <button item-right ion-button color="secondary">Add</button>
+    </ion-item> -->
+    
+ <!-- </ion-list>
+   <ion-list>
+    <ion-item>
+      <ion-label floating>May</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>June</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+  </ion-list> -->
+
+  <!-- Sheet1 -->
+  <div class="input_box" padding *ngIf="page_id == '1-6b'">
+    <p class="large_label">A.  Total reported annual pump withdrawals from the aquifer (MCM) </p>
+    <p class="referText">{{RapData.Sheet1.Table6[4].Annual + RapData.Sheet1.Table6[5].Annual}} MCM</p>
+    <p class="large_label">B.  Estimation of seepage and deep percolation of irrigation water</p>
+    <p class="large_label">Your previous estimate of conveyance efficiency of external water (%): <span>{{project.ECe_ext_water}}</span>  This estimate includes spills, seepage, and evaporation. </p>
+    <ion-item>
+      <ion-label stacked class="large_label">Your estimate of the % of external water that deep percolates during conveyance:</ion-label>
+      <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p class="large_label">**Note: your deep percolation estimate cannot exceed: <span>{{100 - (project.ECe_ext_water | calculate : 'toFloat')}}</span>%</p>
+    <p class="large_label">Your previous est. of the convey. effic. of internal project well water (%): <span>{{project.Ece_int_proj}}</span></p>
+    <!-- <p class="large_label">Est. of field irrigation efficiency computed from your earlier values: <span>12</span></p> -->
+    <ion-item>
+      <ion-label stacked class="large_label">Your estimate of the % of delivered water that deep percolates on-farm:</ion-label>
+      <ion-input type="text" name="est_DWDP" [(ngModel)]="analytics.est_DWDP" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <!-- <p class="large_label">**Note: your deep percolation estimate cannot exceed: <span>12</span></p> -->
+    <p class="large_label">Estimated surface water imports that deep percolate due to conveyance seepage <span>{{(analytics.est_EWdP | calculate :'toFloat')/100*(RapData.Sheet1.Table3[3].Annual | calculate :'toFloat')}}</span></p>
+    <p class="large_label">Estimated surface water imports that deep percolate on-farm <span>{{(RapData.Sheet1.Table3[3].Annual | calculate :'toFloat')*(1-(project.ECe_ext_water | calculate : 'toFloat')/100)*(analytics.est_DWDP | calculate : 'toFloat')/100}}</span></p>
+    <!-- <p class="large_label">C.  Estimate of pumped groundwater that is used for ET or special practices in the command area: <span>{{(1-(project.ECe_ext_water | calculate : 'toFloat')/100)*(1-D151/100)*(O138+O136) + O135*(1-D149/200)*(1-D151/100)}}</span></p>
+    <p class="large_label">D.  Recharge from surface canal water that originated outside the boundaries <span>{{E155+E156}}</span></p>
+    <p class="large_label">E.  Difference (C - D).   If the value > 0.0, the aquifer is considered as an external water source <span>{{F158-F159}}</span></p>
+    <p class="large_label">Rough estimate of Net Aquifer Contribution as an external source: <span>{{"IF(F160>0,F160,0)"}}</span></p> -->
+    
+  </div>
+  <ion-list class="accordion-list" *ngIf="page_id == '1-1' || page_id == '1-2' || page_id == '1-3' || page_id == '1-4' || page_id == '1-5' || page_id == '1-6' || page_id == '1-8' || page_id == '1-9'">
+    <ion-row *ngIf="page_id == '1-8'" style="padding-left: 10px; padding-top: 10px; font-weight: 600">
+      Some crops have special irrigation requirements at a specific time of the year. <br>
+      For example, rice fields may need to be flooded prior to transplanting or planting. <br>
+      Cotton fields may need to be "pre-irrigated" - that is, irrigated prior to planting. <br>
+      These special requirements may require a much higher project irrigation water demand than what is expected if one just examines 
+      evapotranspiration requirements.  However, they do NOT include any leaching requirements for salinity control.
+    </ion-row>
+    <ion-row class="input_box" *ngIf="page_id == '1-9'" style="padding-left: 10px; padding-top: 10px; font-weight: 600">
+      <ion-item>
+        <ion-label stacked class="large_label">Exchange rate -  $US/(local currency) </ion-label>
+        <ion-input type="text" name="ex_currency" [(ngModel)]="ex_currency" (focus)="updateValue($event)"></ion-input>
+      </ion-item>
+    </ion-row>
+    <div *ngFor="let item of analytics; let i = index">
+      <form>
+      <ion-list-header no-lines no-paddings *ngIf="page_id == '1-1'">
+        <button ion-item (click)="toggleSection(item)" detail-none [ngClass]="{'section-active': item.open, 'section': !item.open}">
+          <ion-icon item-right name="arrow-forward" class="arrow-right" *ngIf="!item.open"></ion-icon>
+          <ion-icon item-right name="arrow-down" class="arrow-down-grad"  *ngIf="item.open"></ion-icon>
+          {{item.cropName}}
+        </button>
+      </ion-list-header>
+      <ion-list-header no-lines no-paddings *ngIf="page_id == '1-9' || (page_id == '1-5' && analytics.length != i+1) || page_id == '1-8'">
+        <button ion-item (click)="toggleSection(item)" detail-none [ngClass]="{'section-active': item.open, 'section': !item.open}">
+          <ion-icon item-right name="arrow-forward" class="arrow-right" *ngIf="!item.open"></ion-icon>
+          <ion-icon item-right name="arrow-down" class="arrow-down-grad"  *ngIf="item.open"></ion-icon>
+          {{item.table1.cropName}}
+        </button>
+      </ion-list-header>
+      <ion-list *ngIf="item.open" class="input_box">
+        <div *ngIf="page_id == '1-1'">
+          <ion-item>
+            <ion-label stacked class="large_label">Irrgated Crop Name </ion-label>
+            <ion-input type="text" name="cropName" [(ngModel)]="item.cropName"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="page_id == '1-1'">
+            <ion-label stacked class="large_label">Threshold ECe (dS/m) </ion-label>
+            <ion-input type="text" name="threshold_Ece" [(ngModel)]="item.threshold_Ece" (focus)="updateValue($event)"></ion-input>
+          </ion-item>
+        </div>
+        
+        <div *ngIf="page_id == '1-9'">
+          <ion-item>
+            <ion-label stacked class="large_label">Typical yield, metric tons/ha </ion-label>
+            <ion-input type="text" name="typical_yield" [(ngModel)]="item.typical_yield" (focus)="updateValue($event)"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked class="large_label">Farmgate selling price, Local currency/ metric ton </ion-label>
+            <ion-input type="text" name="farmgate_sp" [(ngModel)]="item.farmgate_sp" (focus)="updateValue($event)"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked class="large_label">hectares </ion-label>
+            <ion-label class="referText">{{item.table5.Annual}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked class="large_label">Gross tonnage/yr </ion-label>
+            <ion-label class="referText">{{(item.typical_yield | calculate: 'toFloat') * (item.table5.Annual | calculate: 'toFloat')}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label stacked class="large_label">Value of agricultural production, $US/yr </ion-label>
+            <ion-label class="referText">{{(ex_currency | calculate: 'toFloat') * (item.farmgate_sp | calculate: 'toFloat') * (item.typical_yield | calculate: 'toFloat') * (item.table5.Annual | calculate: 'toFloat')}}</ion-label>
+            <!-- <ion-input type="text" name="agri_prod" value="{{((ex_currency | calculate: 'toFloat') * (item.farmgate_sp | calculate: 'toFloat') * (item.typical_yield | calculate: 'toFloat') * (item.table5.Annual | calculate: 'toFloat'))  | calculate: 'toString'}}"></ion-input> -->
+          </ion-item>
+        </div>
+        <ion-grid *ngIf="page_id != '1-9'">
+          <ion-row *ngIf="page_id == '1-1'" style="padding-left: 10px; padding-top: 10px; font-weight: 600">Field Coefficient, Kc  (based on ETo)</ion-row>
+          <ion-row *ngIf="page_id == '1-2'" style="padding-left: 10px; padding-top: 10px; font-weight: 600">Monthly ETo, mm</ion-row>
+          <ion-row *ngIf="page_id == '1-3' || page_id == '1-4' || page_id == '1-6'" style="padding-left: 10px; padding-top: 10px; font-weight: 600">{{item.name}} <span *ngIf="page_id == '1-3' && (i==1 || i==2)"><ion-input type="text" name="name" [(ngModel)]="item.referName"></ion-input></span> </ion-row>
+          <ion-row *ngIf="page_id == '1-5'" style="padding-left: 10px; padding-top: 10px; font-weight: 600"> <span *ngIf="analytics.length == i+1">{{item.name}} </span> </ion-row>
+          <ion-row *ngIf="page_id == '1-8'" style="padding-left: 10px; padding-top: 10px; font-weight: 600"> Special Needs, mm. of Irrigation Water</ion-row>
+          
+          <ion-row>
+            <ion-col col-4>
+              <ion-item>
+                <ion-label stacked class="large_label">January</ion-label>
+                <ion-label *ngIf="page_id == '1-5' && analytics.length != i+1" class="referText">{{ item.table1.January }}</ion-label>
+                <ion-input type="text" name="January" [(ngModel)]="item.January" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)" ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4>
+              <ion-item>
+                <ion-label stacked class="large_label">February</ion-label>
+                <ion-label *ngIf="page_id == '1-5' && analytics.length != i+1" class="referText">{{item.table1.February}}</ion-label>
+                <ion-input type="text" name="February" [(ngModel)]="item.February" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4>
+              <ion-item>
+                <ion-label stacked class="large_label">March</ion-label>
+                <ion-input type="text" name="March" [(ngModel)]="item.March" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)"></ion-input>
+                <ion-label *ngIf="page_id == '1-5' && analytics.length != i+1" class="referText" >{{item.table1.March}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4>
+              <ion-item>
+                <ion-label stacked class="large_label">April</ion-label>
+                <ion-input type="text" name="April" [(ngModel)]="item.April" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)"></ion-input>
+                <ion-label *ngIf="page_id == '1-5' && analytics.length != i+1" class="referText" >{{item.table1.April}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4>
+              <ion-item>
+                <ion-label stacked class="large_label">May</ion-label>
+                <ion-input type="text" name="May" [(ngModel)]="item.May" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)"></ion-input>
+                <ion-label *ngIf="page_id == '1-5' && analytics.length != i+1" class="referText" >{{item.table1.May}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4>
+              <ion-item>
+                <ion-label stacked class="large_label">June</ion-label>
+                <ion-input type="text" name="June" [(ngModel)]="item.June" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)"></ion-input>
+                <ion-label *ngIf="page_id == '1-5' && analytics.length != i+1" class="referText" >{{item.table1.June}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4>
+              <ion-item>
+                <ion-label stacked class="large_label">July</ion-label>
+                <ion-input type="text" name="July" [(ngModel)]="item.July" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)"></ion-input>
+                <ion-label *ngIf="page_id == '1-5' && analytics.length != i+1" class="referText">{{item.table1.July}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4>
+              <ion-item>
+                <ion-label stacked class="large_label">August</ion-label>
+                <ion-input type="text" name="August" [(ngModel)]="item.August" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)"></ion-input>
+                <ion-label *ngIf="page_id == '1-5' && analytics.length != i+1" class="referText">{{item.table1.August}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4>
+              <ion-item>
+                <ion-label stacked class="large_label">September</ion-label>
+                <ion-input type="text" name="September" [(ngModel)]="item.September" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)"></ion-input>
+                <ion-label *ngIf="page_id == '1-5' && analytics.length != i+1" class="referText">{{item.table1.September}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4>
+              <ion-item>
+                <ion-label stacked class="large_label">October</ion-label>
+                <ion-input type="text" name="October" [(ngModel)]="item.October" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)"></ion-input>
+                <ion-label *ngIf="page_id == '1-5' && analytics.length != i+1" class="referText">{{item.table1.October}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4>
+              <ion-item>
+                <ion-label stacked class="large_label">November</ion-label>
+                <ion-input type="text" name="November" [(ngModel)]="item.November" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)"></ion-input>
+                <ion-label *ngIf="page_id == '1-5' && analytics.length != i+1" class="referText">{{item.table1.November}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4>
+              <ion-item>
+                <ion-label stacked class="large_label">December</ion-label>
+                <ion-input type="text" name="December" [(ngModel)]="item.December" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)"></ion-input>
+                <ion-label *ngIf="page_id == '1-5' && analytics.length != i+1" class="referText">{{item.table1.December}}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="page_id == '1-2' || page_id == '1-3' || page_id == '1-4' || page_id == '1-6'">
+            <ion-item>
+              <ion-label stacked class="large_label">Annual</ion-label>
+              <ion-input type="text" disabled name="Annual" [(ngModel)]="item.Annual"></ion-input>
+            </ion-item>
+          </ion-row>
+          <ion-row *ngIf="page_id == '1-5'">
+            <ion-item>
+              <ion-label stacked class="large_label">Max Value</ion-label>
+              <ion-input type="text" disabled="true" name="Annual" [(ngModel)]="item.Annual"></ion-input>
+            </ion-item>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+      <ion-item style="text-align: center" *ngIf="item.open && page_id == '1-1'">
+        <button ion-button clear style="height: 50px;" (click)="toggleSection(item,'add')">
+          <ion-icon item-right name="add-circle" style="font-size:3.5em"  *ngIf="item.open" ></ion-icon>
+        </button>
+      </ion-item>
+    </form>
+    </div>
+  </ion-list>
+
+  <!-- Sheet4 -->
+  <div class="input_box" padding *ngIf="page_id == '4'">
+    <ion-input type="text" name="name" [(ngModel)]="analytics.name" value="est_CI" hidden></ion-input>
+    <p class="large_label" style="font-weight: 600">Stated Efficiencies</p>
+    <child-view [desc_name]="'Stated conveyance efficiency of imported canal water (accounts for seepage and spills and tail end flows)(%)'" [value1]="project.ECe_ext_water" (modelValue)="onModelValue($event,'st_CEICW')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Weighted field irrigation efficiency from stated efficiencies(%)'" [value1]="'Ref-xlsx'" (modelValue)="onModelValue($event,'weigh_FIE')" [isInput]="true"></child-view>
+    <p class="large_label" style="font-weight: 600">Areas</p>
+    <child-view [desc_name]="'Physical area of irrigated cropland in the command area (not including multiple cropping)(Ha)'" [value1]="project.cmd_area" (modelValue)="onModelValue($event,'pa_ICCA')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Irrigated crop area in the command area, including multiple cropping(Ha)'" [value1]="RapData.Sheet1.Table5[RapData.Sheet1.Table5.length-1].Annual" (modelValue)="onModelValue($event,'irr_CACA')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Cropping intensity in the command area including double cropping(none)'" [value1]="(RapData.Sheet1.Table5[RapData.Sheet1.Table5.length-1].Annual | calculate:'toFloat')/(project.cmd_area | calculate:'toFloat')"  [value2]="((analytics.pa_ICCA | calculate : 'pow')+ (analytics.irr_CACA | calculate : 'pow')+(analytics.pa_ICCA | calculate : 'pow')* (analytics.irr_CACA | calculate : 'pow')/4) | calculate : 'sqrt'" [isInput]="false"></child-view>
+    <p class="large_label" style="font-weight: 600">External sources of water for the command area</p>
+    <child-view [desc_name]="'Surface irrigation water inflow from outside the command area (gross at diversion and entry points)(MCM)'" [value1]="(RapData.Sheet1.Table3[3].Annual | calculate:'toFloat')"  (modelValue)="onModelValue($event,'surf_irr_WIOCA')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Gross precipitation in the irrigated fields in the command area(MCM)'" [value1]="'Ref-xlsx'"  (modelValue)="onModelValue($event,'GP_IFCA')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Effective precipitation to irrigated fields (not including salinity removal)(MCM)'" [value1]="'Ref-xlsx'"  (modelValue)="onModelValue($event,'EP_IF')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Net aquifer withdrawl due to irrigation in the command area(MCM)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Total external water supply for the project - including gross ppt. and net aquifer withdrawl, but excluding internal recirculation(MCM)'" [value1]="'Ref-xlsx'" [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Total external irrigation supply for the project(MCM)'" [value1]="'Ref-xlsx'" [value2]="'Ref-xlsx'"  [isInput]="false"></child-view>
+    <p class="large_label" style="font-weight: 600">Internal Water Sources</p>
+    <child-view [desc_name]="'Internal surface water recirculation by farmer or project in command area(MCM)'" [value1]="'Ref-xlsx'"  (modelValue)="onModelValue($event,'ISWR_CA')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Gross groundwater pumped by farmers within command area(MCM)'" [value1]="'Ref-xlsx'"  (modelValue)="onModelValue($event,'GGP_CA')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Groundwater pumped by Project Authorities and applied to the command area(MCM)'" [value1]="'Ref-xlsx'"  (modelValue)="onModelValue($event,'GP_PACA')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Gross total annual volume of project authority irrigation supply.(MCM)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Total groundwater pumped and dedicated to the command area(MCM)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Groundwater pumped by Project Authorities and applied to the command area, minus net groundwater withdrawl (this is to avoid double counting.  Also, all of net is applied to this term, although some might be applied to farmers)(MCM)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Estimated total gross internal surface water + groundwaterMCM)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <p class="large_label" style="font-weight: 600">Irrigation water delivered to users</p>
+    <child-view [desc_name]="'Internal authority water sources are stated to have a conveyance efficiency of:(%)'" [value1]="'Ref-xlsx'"  (modelValue)="onModelValue($event,'IAWS_CE')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Delivery of external surface irrigation water to users - using stated conveyance efficiency(MCM)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'All other irrigation water to users (surface recirculation plus all well pumping, with stated conveyance efficiencies, using 100% for farmer pumping and farmer surface diversions)(MCM)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Total irrigation water deliveries to users (external surface irrigation water + internal diversions and pumping water sources), reduced for conveyance efficiencies(MCM)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Total irrigation water (internal plus external) - just for intermed. value(MCM)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Overall conveyance efficiency of project authority delivered water(%)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <p class="large_label" style="font-weight: 600">Net Field Irrigation requirements</p>
+    <child-view [desc_name]="'ET of irrigated fields in the command area(MCM)'" [value1]="'Ref-xlsx'"  (modelValue)="onModelValue($event,'ET_IFCA')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'ET of irrigation water in the command area   (ET - effective precipitation)(MCM)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Irrigation water needed for salinity control (net)(MCM)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Irrigation water needed for special practices(MCM)'" [value1]="'Ref-xlsx'"  (modelValue)="onModelValue($event,'IWNSP')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Total NET irrigation water requirements (ET - eff ppt + salt control + special practices)(MCM)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <p class="large_label" style="font-weight: 600">Other Key Values</p>
+    <child-view [desc_name]="'Flow rate capacity of main canal(s) at diversion point(s)(cms)'" [value1]="'Ref-xlsx'"  (modelValue)="onModelValue($event,'FRC_MC')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Actual peak flow rate of the main canal(s) at diversion point(s) this year(cms)'" [value1]="'Ref-xlsx'"  (modelValue)="onModelValue($event,'APFRMC')" [isInput]="true"></child-view>
+    <child-view [desc_name]="'Peak NET irrigation requirement for field, including any special requirements(cms)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Peak GROSS irrigation requirement, including all inefficiencies(cms)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <p class="large_label" style="font-weight: 600">ANNUAL  or One-Time  External INDICATORS for the Command Area</p>
+    <child-view [desc_name]="'Peak liters/sec/ha of surface irrigation inflows to canal(s) this year(LPS/Ha)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'RWS  Relative water supply for the irrigated part of the command area (Total external water supply)/(Field ET during growing seasons + water for salt control - Effective precipitation)(none)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Annual Command Area Irrigation Efficiency       [100 x (Crop ET + Leaching needs - Effective ppt)/(Surface irrigation diversions + Net groundwater)](%)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Field Irrigation Efficiency (computed) =      [Crop ET-Effective ppt + LR water]/[Total Water Delivered to Users] x 100(%)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'RGCC - Relative Gross Canal Capacity -    (Peak Monthly Net Irrigation Requirement)/(Main Canal Capacity)(none)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'RACF - Relative Actual Canal Flow -   (Peak Monthly Net Irrigation Requirement)/(Peak Main Canal Flow Rate)(none)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Gross annual tonnage of agricultural production by crop type(m Tons)'" [value1]="'Ref-xlsx'"  [value2]="'Ref-xlsx'" [isInput]="false"></child-view>
+    <child-view [desc_name]="'Total annual value of agricultural production($ US)'" [value1]="'Ref-xlsx'"  (modelValue)="onModelValue($event,'TotAnul_AP')" [isInput]="true"></child-view>
+  </div>
+
+  <!-- Sheet5 -->
+  <div class="input_box" padding *ngIf="page_id == '5'">
+    <p class="large_label" style="font-weight: 600">General Project Conditions</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Average net farm size (ha)</ion-label>
+      <ion-input type="text" name="avg_nfs" [(ngModel)]="analytics.avg_nfs" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Number of water users</ion-label>
+      <ion-input type="text" name="num_WU" [(ngModel)]="analytics.num_WU" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Typical field size, ha</ion-label>
+      <ion-input type="text" name="typ_FS" [(ngModel)]="analytics.typ_FS" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>Number of offtakes (turnouts) that are physically operated by paid employees.  These can be of any size.</p>
+    <ion-item>
+      <ion-label stacked class="large_label">By employees of the government or umbrella organization</ion-label>
+      <ion-input type="text" name="emp_gov" [(ngModel)]="analytics.emp_gov" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">By employees of water user associations - within their boundaries</ion-label>
+      <ion-input type="text" name="emp_WU_ass" [(ngModel)]="analytics.emp_WU_ass" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked class="large_label">Land consolidation (or rectangular fields) exists on what % of the project area?</ion-label>
+      <ion-input type="text" name="land_cons" [(ngModel)]="analytics.land_cons" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Canal water supplies what drinking water to what % of the people living in the project area?</ion-label>
+      <ion-input type="text" name="canal_PLIPA" [(ngModel)]="analytics.canal_PLIPA" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>Ownership of land, % of total</p>
+    <ion-item>
+      <ion-label stacked class="large_label">owned and operated by farmers</ion-label>
+      <ion-input type="text" name="owner_own_opr" [(ngModel)]="analytics.owner_own_opr" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">farmed by tenants on private ground</ion-label>
+      <ion-input type="text" name="owner_farm_tenant" [(ngModel)]="analytics.owner_farm_tenant" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">owned by government or cooperative</ion-label>
+      <ion-input type="text" name="owner_own_gov" [(ngModel)]="analytics.owner_own_gov" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">percent rented land</ion-label>
+      <ion-input type="text" name="owner_percent_rent" [(ngModel)]="analytics.owner_percent_rent" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Check:  This value should equal 100 after the question above is answered.</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <p>Field irrigation description</p>
+    <ion-item>
+      <ion-label stacked class="large_label">% of land with sprinklers</ion-label>
+      <ion-input type="text" name="field_sprink" [(ngModel)]="analytics.field_sprink" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">% of land with drip</ion-label>
+      <ion-input type="text" name="field_drip" [(ngModel)]="analytics.field_drip" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">% of land with surface irrigation</ion-label>
+      <ion-input type="text" name="field_surfIrr" [(ngModel)]="analytics.field_surfIrr" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Check:  This value should equal 100 after the question above is answered.</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+
+    <p class="large_label" style="font-weight: 600">Water Supply</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Water source (river, reservoir, wells - write in the answer)</ion-label>
+      <ion-input type="text" name="ws_source" [(ngModel)]="analytics.ws_source" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Live Storage Capacity of Reservoir, million cubic meters (MCM)</ion-label>
+      <ion-input type="text" name="ws_LSCR" [(ngModel)]="analytics.ws_LSCR" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Times/year the majority of system is shut down without water</ion-label>
+      <ion-input type="text" name="ws_maj_shut" [(ngModel)]="analytics.ws_maj_shut" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Typical total annual duration of canal system shutdown, days</ion-label>
+      <ion-input type="text" name="ws_ann_shut" [(ngModel)]="analytics.ws_ann_shut" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>Provide an answer to the most applicable of the 2 questions below:</p>
+    <ion-item>
+      <ion-label stacked class="large_label">1.  What is the volume of gross irrigation water officially allocated to the project, per year, mcm</ion-label>
+      <ion-input type="text" name="ws_vol_GIW" [(ngModel)]="analytics.ws_vol_GIW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">or, 2.  What is the maximum flow rate officially allocated to the project, (cms)</ion-label>
+      <ion-input type="text" name="ws_MFR" [(ngModel)]="analytics.ws_MFR" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">On the average, what percentage of this allocation is provided?    (%)</ion-label>
+      <ion-input type="text" name="ws_avg_alloc" [(ngModel)]="analytics.ws_avg_alloc" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+
+    <p class="large_label" style="font-weight: 600">Ownership (Define by terms such as "country", "state", "project", or "farmer")</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Main canals</ion-label>
+      <ion-input type="text" name="own_main" [(ngModel)]="analytics.own_main" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Secondary canals</ion-label>
+      <ion-input type="text" name="own_sec" [(ngModel)]="analytics.own_sec" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">3rd Level</ion-label>
+      <ion-input type="text" name="own_third" [(ngModel)]="analytics.own_third" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Distributaries to individual fields</ion-label>
+      <ion-input type="text" name="own_DIF" [(ngModel)]="analytics.own_DIF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Water</ion-label>
+      <ion-input type="text" name="own_water" [(ngModel)]="analytics.own_water" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+
+    <p class="large_label" style="font-weight: 600">Currency</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Name of currency used in the budgets below:</ion-label>
+      <ion-input type="text" name="curr_name" [(ngModel)]="analytics.curr_name" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Exchange rate:  (US Dollar)/(Local currency)</ion-label>
+      <ion-input type="text" name="curr_exchg" [(ngModel)]="analytics.curr_exchg" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+
+    <p class="large_label" style="font-weight: 600">Umbrella Water User Association (WUA)</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Do the individual WUAs also belong to a larger, project-level WUA? (Yes/No)</ion-label>
+      <ion-input type="text" name="umb_IBLP" [(ngModel)]="analytics.umb_IBLP" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">If so, does the larger, project-level WUA operate the main canals?  (Yes/No)</ion-label>
+      <ion-input type="text" name="umb_LPOMC" [(ngModel)]="analytics.umb_LPOMC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+
+    <p class="large_label" style="font-weight: 600">Project Budget - Does not include Water User Associations, unless a WUA operates the main canal(s)</p>
+    <p>Annual  Project Budget (average over the last 5 years)</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Total salaries (Local currency/year)</ion-label>
+      <ion-input type="text" name="PB_sal" [(ngModel)]="analytics.PB_sal" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Improvement of structures, modernization (including salaries) - local currency/year</ion-label>
+      <ion-input type="text" name="PB_impSM" [(ngModel)]="analytics.PB_impSM" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Maintenance (including salaries and external contracts) - local currency/yr</ion-label>
+      <ion-input type="text" name="PB_maintain" [(ngModel)]="analytics.PB_maintain" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Rehabilitation (including salaries and external contracts) - local currency/yr</ion-label>
+      <ion-input type="text" name="PB_rehab" [(ngModel)]="analytics.PB_rehab" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Other Operation (including salaries and external contracts) - local currency/yr</ion-label>
+      <ion-input type="text" name="PB_otherOp" [(ngModel)]="analytics.PB_otherOp" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Administration and other (including salaries and external contracts) - local currency/yr</ion-label>
+      <ion-input type="text" name="PB_admin" [(ngModel)]="analytics.PB_admin" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Total annual budget - sum of previous 5 items (Local currency/year)</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <p>Sources of the Project Budget (average over the last 5 years), % from each source</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Country or State Government</ion-label>
+      <ion-input type="text" name="PB_CSG" [(ngModel)]="analytics.PB_CSG" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Foreign</ion-label>
+      <ion-input type="text" name="PB_foreign" [(ngModel)]="analytics.PB_foreign" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Fees from Water User Associations or Farmers (computed from later WUA data)</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Check:  This value should equal 100 after the "Country" and "Foreign" answers are given.</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <p>Employees</p> 
+    <ion-item>
+      <ion-label stacked class="large_label">Professional, permanent employees (college degrees and well-trained technicians)</ion-label>
+      <ion-input type="text" name="PB_Emp_PPE" [(ngModel)]="analytics.PB_Emp_PPE" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Professional employees that are temporary or contract - equivalent number</ion-label>
+      <ion-input type="text" name="PB_Emp_PETC" [(ngModel)]="analytics.PB_Emp_PETC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Non-professional, permanent employees </ion-label>
+      <ion-input type="text" name="PB_Emp_nonProfPE" [(ngModel)]="analytics.PB_Emp_nonProfPE" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Non-professional employees that are temporary or contract - equivalent number</ion-label>
+      <ion-input type="text" name="PB_Emp_nonProfTC" [(ngModel)]="analytics.PB_Emp_nonProfTC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Total number of full time equivalent employees</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Average years a typical professional employee works for the project (anticipated)</ion-label>
+      <ion-input type="text" name="PB_Emp_avgTPEW" [(ngModel)]="analytics.PB_Emp_avgTPEW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">How many of the operation staff actually work in the field?</ion-label>
+      <ion-input type="text" name="PB_Emp_OSAW" [(ngModel)]="analytics.PB_Emp_OSAW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+
+
+    <p>Salaries - include bonus and the equivalent costs of houses and other benefits provided.</p> 
+    <ion-item>
+      <ion-label stacked class="large_label">Professional, senior admin, (Local currency/year)</ion-label>
+      <ion-input type="text" name="PB_sal_PSA" [(ngModel)]="analytics.PB_sal_PSA" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Professional, engineer  (Local currency/year)</ion-label>
+      <ion-input type="text" name="PB_sal_PE" [(ngModel)]="analytics.PB_sal_PE" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Non-professional - canal operators, (Local currency/year) </ion-label>
+      <ion-input type="text" name="PB_sal_NPCO" [(ngModel)]="analytics.PB_sal_NPCO" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Day laborers, (Local currency/year)</ion-label>
+      <ion-input type="text" name="PB_sal_DL" [(ngModel)]="analytics.PB_sal_DL" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">What percentage of the total project (including WUA) Operation and Maintenance (O&M) is collected as in-kind services, and/or water fees from water users? (calculated value from WUA worksheet)</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Calculated Indicator of O&M sources (automatic computation)</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">What percentage of the total budget (project and WUA) is spent on modernization of the water delivery operation/structures (as contrasted to rehabilitation or regular operation)?, %</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Calculated Indicator of the  modernization budget (automatic computation)</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+
+    <p>The question below will require knowledge of the budget, as well as a qualitative assessment of project activities that are seen in the field.</p> 
+    <ion-item>
+      <ion-label stacked class="large_label">What is the visitor's estimate of the adequacy (%) of the actual dollars and in-kind services that is available (from all sources) to sustain adequate Operation and Maintenance (O&M) with the present mode of operation? (Answer =[Available funds]/[Needed Funds] * 100), %</ion-label>
+      <ion-input type="text" name="PB_QAPA_EA" [(ngModel)]="analytics.PB_QAPA_EA" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Calculated Indicator of O&M adequacy (automatic computation)</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+
+    <p class="large_label" style="font-weight: 600">Project Operation</p>
+    <p>Annual Operation Policies</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Does the project make an annual estimate of total deliveries? (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_AO_PAETD" [(ngModel)]="analytics.PO_AO_PAETD" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Is there a fixed advance official schedule of deliveries for the year? (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_AO_FAOSD" [(ngModel)]="analytics.PO_AO_FAOSD" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">If yes, how well is it followed in the field (10=Excellent, 1=Not followed)</ion-label>
+      <ion-input type="text" name="PO_AO_FAOSDR" [(ngModel)]="analytics.PO_AO_FAOSDR" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Does the project tell farmers what crops to plant? (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_AO_PFCP" [(ngModel)]="analytics.PO_AO_PFCP" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">If yes, how well is it followed (10=Excellent, 1 = Not followed)</ion-label>
+      <ion-input type="text" name="PO_AO_PFCPR" [(ngModel)]="analytics.PO_AO_PFCPR" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Do the project authorities limit the acreage that can be planted to various crops? (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_AO_PALPC" [(ngModel)]="analytics.PO_AO_PALPC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">If yes, how well is it followed (10=Excellent, 1=Not followed)</ion-label>
+      <ion-input type="text" name="PO_AO_PALPCR" [(ngModel)]="analytics.PO_AO_PALPCR" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>Daily Operation Policies - as described in the office</p>
+    <ion-item>
+      <ion-label stacked class="large_label">How often are main supply discharges re-calculated, days?</ion-label>
+      <ion-input type="text" name="PO_AO_PALPCR" [(ngModel)]="analytics.PO_AO_PALPCR" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>How are flow changes into the main canal (at the source) computed and adjusted?</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Sums of farmer orders (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_DO_SFO" [(ngModel)]="analytics.PO_DO_SFO" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Observation of general conditions  (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_DO_OGC" [(ngModel)]="analytics.PO_DO_OGC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Standard pre-determined schedule with slight modifications (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_DO_SPSSM" [(ngModel)]="analytics.PO_DO_SPSSM" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Standard pre-determined schedule with no modifications  (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_DO_SPSNM" [(ngModel)]="analytics.PO_DO_SPSNM" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>What daily or weekly INSTRUCTIONS for field persons does the office give?</p>
+    <ion-item>
+      <ion-label stacked class="large_label">1.  Main dam discharge flows (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_DO_MDD" [(ngModel)]="analytics.PO_DO_MDD" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Predicted by computer program? (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_DO_MDD_PCP" [(ngModel)]="analytics.PO_DO_MDD_PCP" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Later observation - How closely is this instruction followed in the field (10=Excellent, 1=Not followed)?</ion-label>
+      <ion-input type="text" name="PO_DO_MDD_LO" [(ngModel)]="analytics.PO_DO_MDD_LO" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">2.  Cross regulator positions (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_DO_CRP" [(ngModel)]="analytics.PO_DO_CRP" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Predicted by computer program? (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_DO_CRP_PCP" [(ngModel)]="analytics.PO_DO_CRP_PCP" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Later observation - How closely is this instruction followed in the field (10=Excellent, 1=Not followed)?</ion-label>
+      <ion-input type="text" name="PO_DO_CRP_LO" [(ngModel)]="analytics.PO_DO_CRP_LO" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">3.  Water levels in the canals (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_DO_WLC" [(ngModel)]="analytics.PO_DO_WLC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Predicted by computer program? (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_DO_WLC_PCP" [(ngModel)]="analytics.PO_DO_WLC_PCP" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Later observation - How closely is this instruction followed in the field (10=Excellent, 1=Not followed)?</ion-label>
+      <ion-input type="text" name="PO_DO_WLC_LO" [(ngModel)]="analytics.PO_DO_WLC_LO" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">4.  Flow rates at all offtakes? (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_DO_FRO" [(ngModel)]="analytics.PO_DO_FRO" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Predicted by computer program? (Yes/No)</ion-label>
+      <ion-input type="text" name="PO_DO_FRO_PCP" [(ngModel)]="analytics.PO_DO_FRO_PCP" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Later observation - How closely is this instruction followed in the field (10=Excellent, 1=Not followed)?</ion-label>
+      <ion-input type="text" name="PO_DO_FRO_LO" [(ngModel)]="analytics.PO_DO_FRO_LO" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.PO_DO_BLO">
+      <ion-list-header>
+          Based on the later observations, describe the extent to which computers (either central or on-site) are used for canal control (assign a value of 0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Very effective usage.  Real time control of all key structures with meaningful results</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - A few key structures are automated with computer controls. </ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Computers are effectively used to predict water flows, gate positions, daily diversions, or other values.  Open loop control.  Output is used in the field and is meaningful.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Computers are used to predict some key control factors, but they are quite ineffective or give erroneous results. </ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - No computers are really used for canal operation.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.PO_DO_CBUBR">
+      <ion-list-header>
+          To what extent are computers being used for billing and record management? (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Used for almost all billing and records.  Frequently updated and effective.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Used  for about half of billing and record-keeping activities.  Frequently updated and effective</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Just beginning either billing or record keeping of turnout deliveries.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Computers are used effectively for some data management on the project (such as flows down canals, dam releases), but not for billing</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - No significant usage of computers for billing and record management</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <p class="large_label" style="font-weight: 600">Stated Water Delivery Service that the Main Canal Provides to its Subcanals</p>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDS_flex">
+      <ion-list-header>
+          Flexibility Index - Choose a value from 0-4, based on the scale below: 
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Wide range of frequency, rate, and duration, but the schedule is arranged by the downstream subcanals several times daily, based on actual need.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Wide range of frequency, rate, and duration but arranged by the downstream canal once/day based on actual need.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Schedules are adjusted weekly by downstream operators</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - The schedules are dictated by the project office.  Changes are made at least weekly.</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 -  The delivery schedule is unknown by the downstream operators, or changes are made less frequently than weekly.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDS_reliab">
+      <ion-list-header>
+          Reliability Index - Choose a value from 0-4, based on the scale below: 
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Second Level canal operators know the flows and receive the flows within a few hours of the targeted time.  No shortages during the year.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Second Level canal operators know the flows, but may have to wait as long as a day to obtain the flows they need.  Only a few shortages throughout the year.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - The flow changes arrive plus or minus 2 days, but are correct.  Perhaps 4 weeks of some shortage throughout the year.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - The flows arrive plus or minus 4 days, but are incorrect.  Perhaps 7 weeks of some shortage throughout the year.</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - Unreliable frequency, rate, and duration more than 50% of the time and the volume is unknown.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDS_equity">
+      <ion-list-header>
+          Equity Index - Choose a value from 0-4, based on the scale below:
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Points along the canal enjoy the same level of good service</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - 5% of the canal turnouts receive significantly poorer service than the average</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - 15% of the canal turnouts receive significantly poorer service than the average.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - 25% of the canal turnouts receive singificantly poorer service than the average.</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - Worse than 25%, or there may not even be any consistent pattern.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDS_CFSC">
+      <ion-list-header>
+          Control of flows to Second Level canals - Choose a value from 0-4, based on the scale below:
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Flows are known and controlled within 5%</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Flows are known and are controlled within 10%</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Flows are not known but are controlled within 10%</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Flows are controlled within 20%</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - Flows have more variation than 20%</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <p class="large_label" style="font-weight: 600">Stated Water Delivery Service provided at the most downstream point operated by a paid employee.</p>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDSD_NoFD">
+      <ion-list-header>
+        Number of fields downstream (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - 1 field</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - less than 3 fields</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - less than 6 fields</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - less than 10 fields</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - 10 or more fields</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDSD_MVD">
+      <ion-list-header>
+          Measurement of volumes delivered at this point (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Excellent measurement and control devices, properly operated and recorded</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Reasonable measurement and control devices, average operation</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Useful but poor measurement of volumes and flow rates</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Reasonable measurement of flows, but not of volumes</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - No measurement of volumes or flows</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDSD_Flex">
+      <ion-list-header>
+          Flexibility (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 -  Unlimited frequency, rate, and duration, but arranged by users within a few days</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Fixed frequency, rate or duration, but arranged.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Dictated rotation, but it approximately matches the crop needs</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Rotation deliveries, but on a somewhat uncertain schedule</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - No established rules</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDSD_Rel">
+      <ion-list-header>
+          Reliability (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Water always arrives with the frequency, rate, and duration promised.   Volume is known.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Very reliable in rate and duration, but occasionally there are a few days of delay.  Volume is known</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Water arrives about when it is needed, and in the correct amounts.  Volume is unknown.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Volume is unknown, and deliveries are fairly unreliable - but less than 50% of the time.</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 -  Unreliable frequency, rate, and duration more than 50% of the time, and volume delivered in unknown.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDSD_AE">
+      <ion-list-header>
+          Apparent Equity (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - All points throughout the project and within tertiary units receive the same type of water delivery service</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Areas of the project receive the same amounts of water, but within an area service is somewhat inequitable.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Areas of the project unintentionally receive somewhat different amounts of water, but within an area it is equitable.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - There are medium inequities both between areas and within areas.</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - There are differences of more than 50% throughout the project on a fairly wide-spread basis.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <p class="large_label" style="font-weight: 600">Stated Water Delivery Service received by individual units (fields or farms).</p>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDSR_MV">
+      <ion-list-header>
+        Measurement of volumes to the individual units  (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Excellent measurement and control devices, properly operated and recorded</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Reasonable measurement and control devices, average operation</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Useful but poor measurement of volumes and flow rates</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Reasonable measurement of flows, but not of volumes</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - No measurement of volumes or flows</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDSR_FI">
+      <ion-list-header>
+          Flexibility to the individual units  (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Unlimited frequency, rate, and duration, but arranged by users within a few days</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Fixed frequency, rate or duration, but arranged.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Dictated rotation, but it approximately matches the crop needs</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Rotation deliveries, but on a somewhat uncertain schedule</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - No established rules</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDSR_RI">
+      <ion-list-header>
+          Reliability to the individual units (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Water always arrives with the frequency, rate, and duration promised.   Volume is known.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Very reliable in rate and duration, but occasionally there are a few days of delay.  Volume is known</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Water arrives about when it is needed, and in the correct amounts.  Volume is unknown.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Volume is unknown, and deliveries are fairly unreliable - but less than 50% of the time.</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - Unreliable frequency, rate, and duration more than 50% of the time, and volume delivered in unknown.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.SWDSR_AE">
+      <ion-list-header>
+        Apparent Equity  (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - All fields throughout the project and within tertiary units receive the same type of water delivery service</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Areas of the project receive the same amounts of water, but within an area service is somewhat inequitable.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Areas of the project unintentionally receive somewhat different amounts of water, but within an area it is equitable.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - There are medium inequities both between areas and within areas.</ion-label>
+        <ion-radio value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - There are differences of more than 50% throughout the project on a fairly wide-spread basis.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-item>
+      <ion-label stacked class="large_label">Computed ratio of (number of turnouts)/(number of paid employees) - uses WUA sheet information</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Computed index of operation staff mobility and efficiency</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+
+    <p class="large_label" style="font-weight: 600">Drainage, and Salinity Information</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Average salinity of the irrigation water, dS/m (computed average of the 3 years of INPUT data)</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Average salinity of the drainage water that leaves the project, dS/m</ion-label>
+      <ion-input type="text" name="DSI_avg_SDW" [(ngModel)]="analytics.DSI_avg_SDW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Average annual depth to the shallow water table, m</ion-label>
+      <ion-input type="text" name="DSI_avg_ADSW" [(ngModel)]="analytics.DSI_avg_ADSW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Change in the shallow water table depth over the last 5 years, m (+ is up)</ion-label>
+      <ion-input type="text" name="DSI_CSW" [(ngModel)]="analytics.DSI_CSW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Chemical Oxygen Demand (COD) of the irrigation water, average mgm/L</ion-label>
+      <ion-input type="text" name="DSI_CODIW" [(ngModel)]="analytics.DSI_CODIW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Chemical Oxygen Demand (COD) of the drainage water, average mgm/L</ion-label>
+      <ion-input type="text" name="DSI_CODDW" [(ngModel)]="analytics.DSI_CODDW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Biological load (BOD) of the irrigation water, average mgm/L</ion-label>
+      <ion-input type="text" name="DSI_BODIW" [(ngModel)]="analytics.DSI_BODIW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Biological load (BOD) of the drainage water, average mgm/L</ion-label>
+      <ion-input type="text" name="DSI_BODDW" [(ngModel)]="analytics.DSI_BODDW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+  </div>
+
+  <!-- Sheet6 -->
+  <div class="input_box" padding *ngIf="page_id == '6'">
+    <p class="large_label" style="font-weight: 600">Various Indicators Regarding Project Employees</p>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.VIPE_FATO">
+      <ion-list-header>
+          Frequency and adequacy of training of operators and middle managers (not secretaries and drivers).  This should include employees at all levels of the distribution system, not only those who work in the office.
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Adequate training at all levels.  Employees are very aware of the capabilities of themselves and of their equipment.  Employees clearly have a service mentality.  Employees are hired with good backgrounds or are trained at the time of employment, and afterwards.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Managers appear to have excellent training, both upon entering employment and continuing afterwards.  But some important knowledge has not been passed down to the operators.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Training exists at all levels as needed, but evidently training does not go deep enough, because employees at all levels seem to be missing some important ideas.  Many employees have never had adequate training - including poor pre-employment backgrounds.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Only minimal training exists.  There is inattention to qualifications upon hiring.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 -  Virtually no training exists before or after hiring.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.VIPE_AWP">
+      <ion-list-header>
+        Availability of written performance rules
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Each employee has a written job description that spells out his/her job and specifies how he/she will be evaluated.  Evaluations are annual, and results are discussed with the employee.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - There is a general written job description in the office.  There is an annual evaluation of performance, but it is not rigorous.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - There is an evaluation, but no detailed job description, nor is there a description of evaluation procedures.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - There is a written job description, but no meaningful evaluation procedure.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 -  No written job description, and no formal evaluation procedure.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.VIPE_PEMD">
+      <ion-list-header>
+        Power of employees to make decisions
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Employees are oficially encouraged to think and act on their own, and they do it in a positive manner.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Employees are not officially encouraged to think and act on their own, but they do it anyway in a positive manner.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Employees are encouraged to think and act on their own, but they do not seem to have much initiative.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Employees are not supposed to do any significant tasks without prior authorization.  However, if they do take the initiative they are not punished.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 -  Employees are not supposed to do any signficant tasks without prior authorization.  They think they will be reprimande if they do something on their own initiative.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.VIPE_APDE">
+      <ion-list-header>
+          Ability of the project to dismiss employees with cause.
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - it is easy to fire or lay off employees.  There is a short process.  Employees are aware of this and know of other employees being fired or laid off when it was necessary.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Employees can be fired if the case is well documented.  It is a long process.  Employees are aware of other employees being fired when it was necessary.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Firing only happens occasionally due to laziness or serious problems.  It is not common.  Employees believe that it would be very unusual unless a person was VERY lazy for a long time.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Firing rarely occurs, and never due to laziness.  It is extremely difficult to lay off excess personnel.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 -  Employees are virtually never fired, even if they should be.  The system appears to be plagued with many people who are not necessary or who should be dismissed but are not.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.VIPE_RES">
+      <ion-list-header>
+        Rewards for ememplary service
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - There is a well designed program that follows a structured process.  Rewards occur at least annually to a significant number of individuals.  Promotions are given for meritorious service, and bonuses or extra benefits are given to those who are at the top of their grade.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - No program, but people who do a good job are frequently promoted.  Promotion is based on merit.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Promotion is based on time in service, some some extra benefits are given for exemplary service.  This is more than just a piece of paper.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - There are seldom awards, but occasionally it happens.  The awards are primarily paper with little or no cash or financial benefit.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 -  Nothing exists.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-item>
+      <ion-label stacked class="large_label">Relative salary of the canal operators, as compared to a typical day laborer.  This is a computed value.</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Index of the relative salary of an operator compared to a day laborer (computed value)</ion-label>
+      <ion-label class="referText">Ref-xlsx</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+  </div>
+
+  <!-- Sheet7 -->
+  <div padding class="input_box" *ngIf="page_id == '7'">
+    <p class="large_label" style="font-weight: 600">Water User Associations - WUAs  -   General description</p>
+    <p>Percentage of project area for which WUAS meet the following descriptions:</p> 
+    <ion-item>
+      <ion-label stacked class="large_label">None - No WUAs exist in any form</ion-label>
+      <ion-input type="text" name="WUA_PPA_NE" [(ngModel)]="analytics.WUA_PPA_NE" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">WUAs exist on paper, but have no meaningful activities</ion-label>
+      <ion-input type="text" name="WUA_PPA_ENMA" [(ngModel)]="analytics.WUA_PPA_ENMA" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">WUAs exist on paper, but have no significant activities except for holding occasional meetings</ion-label>
+      <ion-input type="text" name="WUA_PPA_ENSAHO" [(ngModel)]="analytics.WUA_PPA_ENSAHO" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">WUAs exist, but are quite weak</ion-label>
+      <ion-input type="text" name="WUA_PPA_EQW" [(ngModel)]="analytics.WUA_PPA_EQW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">WUAs exist, with medium strength</ion-label>
+      <ion-input type="text" name="WUA_PPA_EMS" [(ngModel)]="analytics.WUA_PPA_EMS" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Strong WUAs with laws, enforcement, full collection of costs, new investment, etc.</ion-label>
+      <ion-input type="text" name="WUA_PPA_SLEFC" [(ngModel)]="analytics.WUA_PPA_SLEFC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Total (must equal 100)</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Typical WUA size, ha</ion-label>
+      <ion-input type="text" name="WUA_TS" [(ngModel)]="analytics.WUA_TS" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Typical WUA age, years</ion-label>
+      <ion-input type="text" name="WUA_TA" [(ngModel)]="analytics.WUA_TA" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>Functions of a typical WUA (Yes/No answers)</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Distribution of water in its area</ion-label>
+      <ion-input type="text" name="WUA_FT_DWA" [(ngModel)]="analytics.WUA_FT_DWA" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Maintenance of canals</ion-label>
+      <ion-input type="text" name="WUA_FT_MC" [(ngModel)]="analytics.WUA_FT_MC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Construction of facilities in its area</ion-label>
+      <ion-input type="text" name="WUA_FT_CFA" [(ngModel)]="analytics.WUA_FT_CFA" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Collection of water fees</ion-label>
+      <ion-input type="text" name="WUA_FT_CWF" [(ngModel)]="analytics.WUA_FT_CWF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Collection of other fees</ion-label>
+      <ion-input type="text" name="WUA_FT_COF" [(ngModel)]="analytics.WUA_FT_COF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Farmer cooperative - agronomic purposes</ion-label>
+      <ion-input type="text" name="WUA_FT_FCA" [(ngModel)]="analytics.WUA_FT_FCA" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Technical advice to farmers</ion-label>
+      <ion-input type="text" name="WUA_FT_TAF" [(ngModel)]="analytics.WUA_FT_TAF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Are there written rules in the WUA regarding proper behavior of farmers and employees?</ion-label>
+      <ion-input type="text" name="WUA_WRRPBFE" [(ngModel)]="analytics.WUA_WRRPBFE" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Number of fines levied by a typical active WUA in the past year</ion-label>
+      <ion-input type="text" name="WUA_NFLTA" [(ngModel)]="analytics.WUA_NFLTA" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>Governing Board of WUA - select the answer that most closely matches average conditiions)</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Elected by all farmers (1 vote/farmer) - Yes/No</ion-label>
+      <ion-input type="text" name="WUA_GB_EF" [(ngModel)]="analytics.WUA_GB_EF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Elected by all farmers, but votes are weighted by farm size - Yes/No</ion-label>
+      <ion-input type="text" name="WUA_GB_EFVW" [(ngModel)]="analytics.WUA_GB_EFVW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Appointed - Yes/No</ion-label>
+      <ion-input type="text" name="WUA_GB_A" [(ngModel)]="analytics.WUA_GB_A" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Is a government employee on the Board - Yes/No</ion-label>
+      <ion-input type="text" name="WUA_GB_GEB" [(ngModel)]="analytics.WUA_GB_GEB" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p class="large_label" style="font-weight: 600">Water User Association (WUA) Budget - These are TOTALs of all WUAs in the project.</p>
+    <p>**This does NOT include an Umbrella WUA - its budgets should be included in the earlier Project Office Questionnaire worksheet**</p>
+    <p>Sum of all Annual WUA Budgets (average over the last 5 years) - Local currency/yr</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Total salaries</ion-label>
+      <ion-input type="text" name="WUA_SAB_TS" [(ngModel)]="analytics.WUA_SAB_TS" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Improvement of structures and modernization (including salaries)</ion-label>
+      <ion-input type="text" name="WUA_SAB_ISM" [(ngModel)]="analytics.WUA_SAB_ISM" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Maintenance (including salaries and external contracts)</ion-label>
+      <ion-input type="text" name="WUA_SAB_M" [(ngModel)]="analytics.WUA_SAB_M" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Rehabilitation (including salaries and external contracts)</ion-label>
+      <ion-input type="text" name="WUA_SAB_R" [(ngModel)]="analytics.WUA_SAB_R" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Other Operation (including salaries and external contracts)</ion-label>
+      <ion-input type="text" name="WUA_SAB_OO" [(ngModel)]="analytics.WUA_SAB_OO" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Administration (including salaries and external contracts)</ion-label>
+      <ion-input type="text" name="WUA_SAB_A" [(ngModel)]="analytics.WUA_SAB_A" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Funds sent away to the project offices or government</ion-label>
+      <ion-input type="text" name="WUA_SAB_FSPO" [(ngModel)]="analytics.WUA_SAB_FSPO" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Total of all WUA Budgets (sum of previous 6 items)</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <p>Sources of WUA Budgets (average over the last 5 years), Percentage from each source</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Country or State Government</ion-label>
+      <ion-input type="text" name="WUA_SB_CSG" [(ngModel)]="analytics.WUA_SB_CSG" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Foreign</ion-label>
+      <ion-input type="text" name="WUA_SB_F" [(ngModel)]="analytics.WUA_SB_F" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Fees from Farmers</ion-label>
+      <ion-input type="text" name="WUA_SB_FF" [(ngModel)]="analytics.WUA_SB_FF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Total (must equal 100)</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <p>Employees (totals for all WUAs in project)</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Professional, permanent employees (college degrees and well-trained technicians)</ion-label>
+      <ion-input type="text" name="WUA_Emp_PPE" [(ngModel)]="analytics.WUA_Emp_PPE" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Professional employees that are temporary or contract - equivalent number</ion-label>
+      <ion-input type="text" name="WUA_Emp_PETC" [(ngModel)]="analytics.WUA_Emp_PETC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Non-professional, permanent employees </ion-label>
+      <ion-input type="text" name="WUA_Emp_NPPE" [(ngModel)]="analytics.WUA_Emp_NPPE" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Non-professional employees that are temporary or contract - equivalent number</ion-label>
+      <ion-input type="text" name="WUA_Emp_NPETCEN" [(ngModel)]="analytics.WUA_Emp_NPETCEN" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Total number of full time equivalent employees</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Average years a typical professional employee works for a WUA (anticipated)</ion-label>
+      <ion-input type="text" name="WUA_Emp_AYTPEW" [(ngModel)]="analytics.WUA_Emp_AYTPEW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">How many of the operation staff actually work in the field?</ion-label>
+      <ion-input type="text" name="WUA_Emp_OSAWF" [(ngModel)]="analytics.WUA_Emp_OSAWF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>Salaries - These should include the equivalent worth of benefits, housing, etc. that are provided.</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Professional, senior admin, (Local currency/year)</ion-label>
+      <ion-input type="text" name="WUA_SBH_PSA" [(ngModel)]="analytics.WUA_SBH_PSA" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Professional, engineer  (Local currency/year)</ion-label>
+      <ion-input type="text" name="WUA_SBH_PE" [(ngModel)]="analytics.WUA_SBH_PE" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Non-prof. - canal operators, (Local currency/year)</ion-label>
+      <ion-input type="text" name="WUA_SBH_NPCO" [(ngModel)]="analytics.WUA_SBH_NPCO" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Day laborers, (Local currency/year)</ion-label>
+      <ion-input type="text" name="WUA_SBH_DL" [(ngModel)]="analytics.WUA_SBH_DL" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p class="large_label" style="font-weight: 600">Water Charges</p>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.Water_charges">
+      <ion-list-header>
+        How are water charges collected? - select one of the 3 choices below
+      </ion-list-header>
+      <ion-item>
+        <ion-label>1.  None collected, and none are assessed</ion-label>
+        <ion-radio checked="true" value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2.  None collected, although policy says charges are to be collected </ion-label>
+        <ion-radio value="2"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3. They are collected </ion-label>
+        <ion-radio value="3" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-item>
+      <ion-label stacked class="large_label">What Percentage of water charges are recovered/collected?,  %</ion-label>
+      <ion-input type="text" name="WC_WCR" [(ngModel)]="analytics.WC_WCR" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.WC_GCWC">
+      <ion-list-header>
+        What group collects the water charges? (Choose 1, 2, or 3) 
+      </ion-list-header>
+      <ion-item>
+        <ion-label>1.  From individual users by the government or central organization</ion-label>
+        <ion-radio checked="true" value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2.  From individual users by a WUA</ion-label>
+        <ion-radio value="2"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3.  Other</ion-label>
+        <ion-radio value="3" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <p>Basis of water charge and amount of the charge</p>
+    <ion-item>
+      <ion-label stacked class="large_label">If by area, (Local currency)/hectare/year</ion-label>
+      <ion-input type="text" name="WC_BWCA_A" [(ngModel)]="analytics.WC_BWCA_A" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">If by crop, the maximum rate in (Local currency)/crop/year   (not per season)</ion-label>
+      <ion-input type="text" name="WC_BWCA_CMR" [(ngModel)]="analytics.WC_BWCA_CMR" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">If per irrigation, specify the (Local currency)/irrigation</ion-label>
+      <ion-input type="text" name="WC_BWCA_IS" [(ngModel)]="analytics.WC_BWCA_IS" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">If volumetric, (Local currency)/cubic meter</ion-label>
+      <ion-input type="text" name="WC_BWCA_V" [(ngModel)]="analytics.WC_BWCA_V" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    
+    <!-- start -->
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.WC_WCDV">
+      <ion-list-header>
+        If water charges are described as "volumetric", which one of the following describes the term?
+      </ion-list-header>
+      <ion-item>
+        <ion-label>a.  The volume delivered to each farmer, each irrigation, is measured</ion-label>
+        <ion-radio checked="true" value="a"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>b.  The volume is estimated based on total volume applied to an area of many farms</ion-label>
+        <ion-radio value="b"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>c. None</ion-label>
+        <ion-radio value="c" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-item>
+      <ion-label stacked class="large_label">Is there a special charge for private well usage? (Yes/No)</ion-label>
+      <ion-input type="text" name="WC_SCPW" [(ngModel)]="analytics.WC_SCPW" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">If so, what is charge? (Local currency)</ion-label>
+      <ion-input type="text" name="WC_SCPW_C" [(ngModel)]="analytics.WC_SCPW_C" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Describe the "unit" that is charged for:</ion-label>
+      <ion-input type="text" name="WC_SCPW_UC" [(ngModel)]="analytics.WC_SCPW_UC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">If so, what Percentage of these charges are collected?</ion-label>
+      <ion-input type="text" name="WC_SCPW_PCC" [(ngModel)]="analytics.WC_SCPW_PCC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Estimated total annual water charges collected from farmers throughout the whole project, (Local currency)/year - not including in-kind fees</ion-label>
+      <ion-input type="text" name="WC_ETAWCCF" [(ngModel)]="analytics.WC_ETAWCCF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>What annual value of in-kind services or contributions are provided by water users above point of ownership (equivalent local currency) for the total project?</p>
+    <ion-item>
+      <ion-label stacked class="large_label">a.  Labor (Local currency value)</ion-label>
+      <ion-input type="text" name="WC_AVSC_L" [(ngModel)]="analytics.WC_AVSC_L" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">b.  Crop (Local currency value)</ion-label>
+      <ion-input type="text" name="WC_AVSC_C" [(ngModel)]="analytics.WC_AVSC_C" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">c.  Construction materials (Local currency value)</ion-label>
+      <ion-input type="text" name="WC_AVSC_CM" [(ngModel)]="analytics.WC_AVSC_CM" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">d.  Other (Local currency value)</ion-label>
+      <ion-input type="text" name="WC_AVSC_O" [(ngModel)]="analytics.WC_AVSC_O" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Total in-kind</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Frequency of in-kind services (Number of times per year)</ion-label>
+      <ion-input type="text" name="WC_FKS" [(ngModel)]="analytics.WC_FKS" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">What Percentage of farmers participate in the in-kind services?</ion-label>
+      <ion-input type="text" name="WC_PFPKS" [(ngModel)]="analytics.WC_PFPKS" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>Various indices for Water User Associations (use the information above to answer these questions)</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Percentage of all project users who have a functional, formal unit that participates in water distribution</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Automatically calculated index value (0-4)</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.WC_AASWUA">
+      <ion-list-header>
+          Actual ability of the strong Water User Associations to influence real-time water deliveries to the WUA.  (Note:  This only applies to the strong WUAs.  If there are no strong WUAs in the project, the answer is "0".)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Within the capacity of the supply canal, changes are made according to the WUA request within 1 day of advance notice as a standard practice.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Changes can be made according to the WUA request with a one week advance notice - any flow rate, duration, or frequency that is physically possible.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Changes can be made according to the WUA request with a one week advance notice, but the changes are limited (less than what is probably physically possible).</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - The WUAs have no realistic voice in ordering, except for occasional changes.  Perhaps they have a formal meeting a few times a year and express their desires.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - No one listens to them.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.WC_AREOE">
+      <ion-list-header>
+          Ability of the WUA to rely on effective outside help for enforcement of its rules  (Note:   If there are no WUAs in the project, the answer is "0".)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - No problem.  Just call up local authorities.  The local authorities come out right away and effectively prosecute wrong-doers.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - The local authorities will come and are moderately successful with prosecutions.  Corruption is not a problem.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Sometimes, for very serious cases, the authorities will come.  But they are not very effective or helpful.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Although some enabling laws have been written by the government, it is up to the WUA to enforce those laws.  There is no help with enforcement from outside the WUA.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - There are no enabling laws, and no outside assistance with enforcement.  Everything depends on the WUA.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.WC_LB">
+      <ion-list-header>
+          Legal basis for the WUAs  (Note:   If there are no WUAs in the project, the answer is "0".)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - WUAs are recognized and formed under law.  They have legal powers to tax, hold money, dismiss employees, condemn land, and own structures.  The law is real and the enabling legislation is upheld in courts.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - The WUAs are recognized by law.  There is good judicial backup.  However, the powers are limited.  The government still holds most of the power that could belong to the WUA.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - The WUAs are recognized by law.  Many rules have been laid out in enabling legislation.  Supposedly, the WUA has power, but in reality there is no support from either the judicial or executive systems to support it.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Although the government has the WUAs "on the books", in reality there are few if any true powers related to water.  The WUAs were formed mainly to the bidding of the government, such as collecting fees.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - WUAs are not even on the state or federal government books.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.WC_FS">
+      <ion-list-header>
+          Financial strength of WUAS  (Note:   If there are no WUAs in the project, the answer is "0".)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Completely and sufficiently self-sustaining.  They have the power to tax, charge for water, and obtain loans.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Completely and sufficiently financed, but much of the financing comes from the government in terms of maintenance, operation, grants, etc.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Underfinanced, but not badly.  Conditions are poor but are maintained and replaced well enough to be functional.  No modernization improvements are made.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Inadequate, but enough funds to replace and maintain key structures.  Insufficient funds to do much of the basic maintenance needed..</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 -  Woefully inadequate.  Only enough funds or in-kind services are available to do absolutely essential tasks.  Funds are insufficient to maintain and replace essential equipment.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+  </div>
+  
+  <!-- Sheet11 -->
+  <div class="input_box" padding *ngIf="page_id == '11'">
+    <p class="large_label" style="font-weight: 600">Point of Management Change (downstream of which the Paid Employees do not operate turnouts)</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Hectares downstream of that point (typical)</ion-label>
+      <ion-input type="text" name="PMC_HDP" [(ngModel)]="analytics.PMC_HDP" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Number of water users downstream of that point (typical)</ion-label>
+      <ion-input type="text" name="PMC_WUDP" [(ngModel)]="analytics.PMC_WUDP" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p class="large_label" style="font-weight: 600">Actual Service provided at the most downstream point operated by a paid employee.</p>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.ASPD_FDP">
+      <ion-list-header>
+        Number of fields downstream of this point (select from below, 0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - 1 field</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - less than 3 fields</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - less than 6 fields</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - less than 10 fields</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 -  10 or more fields</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.ASPD_MVDP">
+      <ion-list-header>
+        Measurement of volumes delivered at this point (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Excellent measurement and control devices, properly operated and recorded</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Reasonable measurement and control devices, average operation</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Useful but poor measurement of volumes and flow rates</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Reasonable measurement of flows, but not of volumes</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - No measurement of volumes or flows</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.ASPD_F">
+      <ion-list-header>
+        Flexibility (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Unlimited frequency, rate, and duration, but arranged by users within a few days</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Fixed frequency, rate or duration, but arranged.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Dictated rotation, but it approximately matches the crop needs</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Rotation deliveries, but on a somewhat uncertain schedule</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - No established rules</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.ASPD_R">
+      <ion-list-header>
+        Reliability (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Water always arrives with the frequency, rate, and duration promised.   Volume is known.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Very reliable in rate and duration, but occasionally there are a few days of delay.  Volume is known</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Water arrives about when it is needed, and in the correct amounts.  Volume is unknown.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Volume is unknown, and deliveries are fairly unreliable - but less than 50% of the time.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - Unreliable frequency, rate, and duration more than 50% of the time, and volume delivered in unknown.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.ASPD_AE">
+      <ion-list-header>
+        Apparent Equity (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - All points throughout the project and within tertiary units receive the same type of water delivery service</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Areas of the project receive the same amounts of water, but within an area service is somewhat inequitable.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Areas of the project unintentionally receive somewhat different amounts of water, but within an area it is equitable.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - There are medium inequities both between areas and within areas.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - There are differences of more than 50% throughout the project on a fairly wide-spread basis.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <p class="large_label" style="font-weight: 600">Final Water Distribution to Individual Ownership Units (e.g., field or farm)</p>
+    <p>What percentage of the final distribution of water to individual fields is made by these people?</p>
+    <ion-item>
+      <ion-label stacked class="large_label">No one (%)</ion-label>
+      <ion-input type="text" name="FWD_PDW_NO" [(ngModel)]="analytics.FWD_PDW_NO" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Individual farmer or farm irrigator (%)</ion-label>
+      <ion-input type="text" name="FWD_PDW_IFI" [(ngModel)]="analytics.FWD_PDW_IFI" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">WUA volunteer (%)</ion-label>
+      <ion-input type="text" name="FWD_PDW_WV" [(ngModel)]="analytics.FWD_PDW_WV" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">WUA employee (%)</ion-label>
+      <ion-input type="text" name="FWD_PDW_WE" [(ngModel)]="analytics.FWD_PDW_WE" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Project-level employee (%)</ion-label>
+      <ion-input type="text" name="FWD_PDW_PLE" [(ngModel)]="analytics.FWD_PDW_PLE" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Check:  The value on the right should equal 100% if the question above is answered properly</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">If farmers must cooperate, how many farmers must cooperate to make the final distribution of water to fields?</ion-label>
+      <ion-input type="text" name="FWD_FMCFD" [(ngModel)]="analytics.FWD_FMCFD" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>What percentage of the final distribution is done through:</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Small unlined distributary canals (%)</ion-label>
+      <ion-input type="text" name="FWD_PFD_SUDC" [(ngModel)]="analytics.FWD_PFD_SUDC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Larger unlined canals (%)</ion-label>
+      <ion-input type="text" name="FWD_PFD_LUC" [(ngModel)]="analytics.FWD_PFD_LUC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Field-through-field conveyance (%)</ion-label>
+      <ion-input type="text" name="FWD_PFD_FTC" [(ngModel)]="analytics.FWD_PFD_FTC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Pipelines (%)</ion-label>
+      <ion-input type="text" name="FWD_PFD_P" [(ngModel)]="analytics.FWD_PFD_P" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Lined canals (%)</ion-label>
+      <ion-input type="text" name="FWD_PFD_LC" [(ngModel)]="analytics.FWD_PFD_LC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Check:  The value on the right should equal 100% if the question above is answered properly</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">General condition of final conveyance (10=Excellent, 1=Horrible)</ion-label>
+      <ion-input type="text" name="FWD_GCFC" [(ngModel)]="analytics.FWD_GCFC" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Ability to measure flow rate to individual fields/farm (10=Excellent, 1=Horrible)</ion-label>
+      <ion-input type="text" name="FWD_AMFR" [(ngModel)]="analytics.FWD_AMFR" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Ability to measure volume to individual fields/farm (10=Excellent, 1=Horrible)</ion-label>
+      <ion-input type="text" name="FWD_AMV" [(ngModel)]="analytics.FWD_AMV" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>FLEXIBILITY to final field/farm</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Are there written arrangements/policies for FREQUENCY of water delivery? (Yes/No)</ion-label>
+      <ion-input type="text" name="FWD_F_APF" [(ngModel)]="analytics.FWD_F_APF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">How closely are they followed? (10=Excellent, 1=Horrible)</ion-label>
+      <ion-input type="text" name="FWD_F_APF_CF" [(ngModel)]="analytics.FWD_F_APF_CF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Are actual practices better than official policies?(10=Yes, 1=No)</ion-label>
+      <ion-input type="text" name="FWD_F_APF_APB" [(ngModel)]="analytics.FWD_F_APF_APB" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Are there written arrangements/policies for RATE of water delivery? (Yes/No)</ion-label>
+      <ion-input type="text" name="FWD_F_WAR" [(ngModel)]="analytics.FWD_F_WAR" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">How closely are they followed? (10=Excellent, 1=Horrible)</ion-label>
+      <ion-input type="text" name="FWD_F_WAR_CF" [(ngModel)]="analytics.FWD_F_WAR_CF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Are actual practices better than official policies?(10=Yes, 1=No)</ion-label>
+      <ion-input type="text" name="FWD_F_WAR_APB" [(ngModel)]="analytics.FWD_F_WAR_APB" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Are there written arrangements/policies for DURATION of water delivery?   (Yes/No)</ion-label>
+      <ion-input type="text" name="FWD_F_APD" [(ngModel)]="analytics.FWD_F_APD" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">How closely are they followed? (10=Excellent, 1=Horrible)</ion-label>
+      <ion-input type="text" name="FWD_F_APD_CF" [(ngModel)]="analytics.FWD_F_APD_CF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Are actual practices better than official policies?(10=Yes, 1=No)</ion-label>
+      <ion-input type="text" name="FWD_F_APD_APB" [(ngModel)]="analytics.FWD_F_APD_APB" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>What percentage of the time do farmers actually receive water as:?</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Continuous flow - no adjustments (%)</ion-label>
+      <ion-input type="text" name="FWD_FAR_CFNA" [(ngModel)]="analytics.FWD_FAR_CFNA" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Continuous flow - some adjustments (%)</ion-label>
+      <ion-input type="text" name="FWD_FAR_CFSA" [(ngModel)]="analytics.FWD_FAR_CFSA" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Fixed rotation - well defined schedule that is followed (%)</ion-label>
+      <ion-input type="text" name="FWD_FAR_FRSF" [(ngModel)]="analytics.FWD_FAR_FRSF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Fixed rotation - well defined schedule that is often not followed (%)</ion-label>
+      <ion-input type="text" name="FWD_FAR_FRSNF" [(ngModel)]="analytics.FWD_FAR_FRSNF" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Rotation - variable but known schedule (%)</ion-label>
+      <ion-input type="text" name="FWD_FAR_RVS" [(ngModel)]="analytics.FWD_FAR_RVS" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Rotation - variable and unknown schedule (%)</ion-label>
+      <ion-input type="text" name="FWD_FAR_RVNS" [(ngModel)]="analytics.FWD_FAR_RVNS" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Arranged (but not part of a rotation) (%)</ion-label>
+      <ion-input type="text" name="FWD_FAR_A" [(ngModel)]="analytics.FWD_FAR_A" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Check:  The value on the right should equal 100% if the question above is answered properly</ion-label>
+      <!-- <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input> -->
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Advance days notice required if water deliveries are arranged</ion-label>
+      <ion-input type="text" name="FWD_ADN" [(ngModel)]="analytics.FWD_ADN" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p>EQUITY</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Is there an effective legal mechanism to ensure that individual farmers receive water with equity?   (Yes/No)</ion-label>
+      <ion-input type="text" name="FWD_E_ELM" [(ngModel)]="analytics.FWD_E_ELM" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p class="large_label" style="font-weight: 600">Actual Service received by individual units (field or farms).</p>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.ASR_MV">
+      <ion-list-header>
+        Measurement of volumes to the individual units (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Excellent measurement and control devices, properly operated and recorded</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Reasonable measurement and control devices, average operation</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Useful but poor measurement of volumes and flow rates</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Reasonable measurement of flows, but not of volumes</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - No measurement of volumes or flows</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.ASR_F">
+      <ion-list-header>
+        Flexibility to the individual units (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Unlimited frequency, rate, and duration, but arranged by users within a few days</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Fixed frequency, rate or duration, but arranged.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Dictated rotation, but it approximately matches the crop needs</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Rotation deliveries, but on a somewhat uncertain schedule</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - No established rules</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.ASR_R">
+      <ion-list-header>
+        Reliability to the individual units (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - Water always arrives with the frequency, rate, and duration promised.   Volume is known.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Very reliable in rate and duration, but occasionally there are a few days of delay.  Volume is known</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Water arrives about when it is needed, and in the correct amounts.  Volume is unknown.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Volume is unknown, and deliveries are fairly unreliable - but less than 50% of the time.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - Unreliable frequency, rate, and duration more than 50% of the time, and volume delivered in unknown.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.ASR_AE">
+      <ion-list-header>
+        Apparent Equity to individual units (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - All fields throughout the project and within tertiary units receive the same type of water delivery service</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Areas of the project receive the same amounts of water, but within an area the water delivery service is somewhat inequitable.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Areas of the project unintentionally receive somewhat different amounts of water (unintentionally), but within an area the water delivery service is equitable.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - There are medium inequities both between areas and within areas.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - There are differences of more than 50% throughout the project on a fairly wide-spread basis.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <p class="large_label" style="font-weight: 600">Perceptions by Visiting Team</p>
+    <ion-item>
+      <ion-label stacked class="large_label">Sense of lack of conflict between users (10=no conflicts, 1=huge problems)</ion-label>
+      <ion-input type="text" name="PVT_SLCU" [(ngModel)]="analytics.PVT_SLCU" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Sense of lack of conflict between users and the government/project (10=no conflicts, 1=huge problems)</ion-label>
+      <ion-input type="text" name="PVT_SLCUG" [(ngModel)]="analytics.PVT_SLCUG" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="large_label">Ability to convert to modern field irrigation systems (10=easy; 1=almost impossible with the level of service provided)</ion-label>
+      <ion-input type="text" name="PVT_ACMFIS" [(ngModel)]="analytics.PVT_ACMFIS" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+    <p class="large_label" style="font-weight: 600">"Order" Indicators - Evidence of orderly behavior throughout the canals that are operated by paid employees.</p>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.OI_DDNT">
+      <ion-list-header>
+        Degree to which deliveries are NOT taken when not allowed, or NOT taken at flow rates greater than allowed (0-4)
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - No noticeable evidence of farmers or WUAs taking deliveries when not allowed, or at flow rates greater than allowed.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Between 0 and 5% of deliveries are taken when not allowed or at flow rates greater than allowed.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Between 5 and 15% of deliveries are taken when not allowed or at flow rates greater than allowed.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Between 15 and 30% of deliveries are taken when not allowed or at flow rates greater than allowed.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - Greater than 30% of deliveries are taken when not allowed or at flow rates greater than allowed.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.OI_NNEUT">
+      <ion-list-header>
+        Noticeable non-existence of unauthorized turnouts from canals (0-4).
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - No noticeable evidence of farmers or WUAs having unauthorized turnout locations.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Between 0 and 3% of deliveries are taken from unauthorized locations.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Between 3 and 6% of deliveries are taken from unauthorized locations.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Between 6 and 10% of deliveries are taken from unauthorized locations.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - Greater than 10% of deliveries are taken from unauthorized locations.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group class="radio_txt" [(ngModel)]="analytics.OI_LVS">
+      <ion-list-header>
+        Lack of vandalism of structures (0-4).
+      </ion-list-header>
+      <ion-item>
+        <ion-label>4 - No noticeable evidence of vandalism of structures.</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>3 - Between 0 and 3% of structures are vandalized.</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>2 - Between 3 and 6% of structures are vandalized.</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>1 - Between 6 and 10% of structures are vandalized.</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>0 - More than 10% of structures are vandalized.</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+  </div>
+
+
+
+
+
+
+
+<div *ngIf="page_id == '18'">
+
+  
+    <p class="large_label" style="font-weight: 600">sand</p>
+  
+    <ion-list radio-group>
+      <ion-list-header>
+        sand
+      </ion-list-header>
+      <ion-item>
+        <ion-label>san</ion-label>
+        <ion-radio checked="true" value="4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>san</ion-label>
+        <ion-radio value="3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>san</ion-label>
+        <ion-radio value="2" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>san</ion-label>
+        <ion-radio value="1" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>san</ion-label>
+        <ion-radio value="0" ></ion-radio>
+      </ion-item>
+    </ion-list>
+  
+  
+    <ion-item>
+      <ion-label stacked class="large_label">san</ion-label>
+      <ion-input type="text" name="est_EWdP" [(ngModel)]="analytics.est_EWdP" value="0" (focus)="updateValue($event)"></ion-input>
+    </ion-item>
+  
+    <p ></p>
+</div>
+
+
+            <!-- <ion-input type="text" name="January" [(ngModel)]="item.January" (focus)="updateValue($event)" (keyup)="calAnnual(i, $event)" [disabled]="isDisabled(i)" ></ion-input> -->
+
+
+  <!-- Sheet1-Table2 -->
+  <!-- <ion-list class="accordion-list input_box" *ngIf="page_id == '1-2'">
+    <ion-grid>
+      <ion-row style="padding-left: 10px;padding-top: 10px; font-weight: 600">Monthly ETo, mm</ion-row>
+      <ion-row>
+        <ion-col col-4 *ngFor="let m of months">
+          <ion-item>
+            <ion-label stacked class="large_label">{{m.name}}</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        
+      </ion-row>
+    </ion-grid>
+  </ion-list> -->
+
+  <!-- Sheet1-Table3 -->
+    <!-- <ion-list class="accordion-list input_box" *ngIf="page_id == '1-3'">
+      <ion-grid>
+        <ion-row style="padding-left: 10px;padding-top: 10px; font-weight: 600">Irrigation Water Entering from outside the command area through regular canals.  The MCM should be the total MCM at the original diversion point.</ion-row>
+        <ion-row>
+          <ion-col col-4 *ngFor="let m of months">
+            <ion-item>
+              <ion-label stacked class="large_label">{{m.name}}</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-item>
+            <ion-label stacked class="large_label">Annual</ion-label>
+            <ion-input type="text" disabled></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row style="padding-left: 10px;padding-top: 10px; font-weight: 600">Other Irrigation water inflows to Command Area from External Source</ion-row>
+        <ion-item>
+          <ion-input type="text" placeholder="Name"></ion-input>
+        </ion-item>
+        <ion-row>
+          <ion-col col-4 *ngFor="let m of months">
+            <ion-item>
+              <ion-label stacked class="large_label">{{m.name}}</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-item>
+            <ion-label stacked class="large_label">Annual</ion-label>
+            <ion-input type="text" disabled></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row style="padding-left: 10px;padding-top: 10px; font-weight: 600">Other Irrigation water inflows to Command Area from External Source</ion-row>
+        <ion-item>
+          <ion-input type="text" placeholder="Name"></ion-input>
+        </ion-item>
+        <ion-row>
+          <ion-col col-4 *ngFor="let m of months">
+            <ion-item>
+              <ion-label stacked class="large_label">{{m.name}}</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-item>
+            <ion-label stacked class="large_label">Annual</ion-label>
+            <ion-input type="text" disabled></ion-input>
+          </ion-item>
+        </ion-row>
+      </ion-grid>
+    </ion-list> -->
+
+
+    <!-- Sheet1-Table4 -->
+    <!-- <ion-list class="accordion-list input_box" *ngIf="page_id == '1-4'">
+      <ion-grid>
+        <ion-row style="padding-left: 10px;padding-top: 10px; font-weight: 600">Direct Farmer Usage of non-canal Water Inside the Command Area.</ion-row>
+        <ion-row>
+          <ion-col col-4 *ngFor="let m of months">
+            <ion-item>
+              <ion-label stacked class="large_label">{{m.name}}</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-item>
+            <ion-label stacked class="large_label">Annual</ion-label>
+            <ion-input type="text" disabled></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row style="padding-left: 10px;padding-top: 10px; font-weight: 600">Project Authority Use of non-canal Surface Water Inside Command Area.</ion-row>
+        <ion-item>
+          <ion-input type="text" placeholder="Name"></ion-input>
+        </ion-item>
+        <ion-row>
+          <ion-col col-4 *ngFor="let m of months">
+            <ion-item>
+              <ion-label stacked class="large_label">{{m.name}}</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-item>
+            <ion-label stacked class="large_label">Annual</ion-label>
+            <ion-input type="text" disabled></ion-input>
+          </ion-item>
+        </ion-row>
+      </ion-grid>
+    </ion-list> -->
+
+  <!-- Sheet1-Table6 -->
+  <!-- <ion-list class="accordion-list input_box" *ngIf="page_id == '1-6'">
+    <ion-grid>
+      <ion-row style="padding-left: 10px;padding-top: 10px; font-weight: 600">Ground water pumped by farmers Inside the Command Area</ion-row>
+      <ion-row>
+        <ion-col col-4 *ngFor="let m of months">
+          <ion-item>
+            <ion-label stacked class="large_label">{{m.name}}</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-item>
+          <ion-label stacked class="large_label">Annual</ion-label>
+          <ion-input type="text" disabled></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row style="padding-left: 10px;padding-top: 10px; font-weight: 600">Ground water pumped by the Project Authorities Inside the Command Area.</ion-row>
+      <ion-item>
+        <ion-input type="text" placeholder="Name"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col col-4 *ngFor="let m of months">
+          <ion-item>
+            <ion-label stacked class="large_label">{{m.name}}</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-item>
+          <ion-label stacked class="large_label">Annual</ion-label>
+          <ion-input type="text" disabled></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row style="padding-left: 10px;padding-top: 10px; font-weight: 600">Ground water pumped from the Aquifer, But which remains outside the Command Area</ion-row>
+      <ion-item>
+        <ion-input type="text" placeholder="Name"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col col-4 *ngFor="let m of months">
+          <ion-item>
+            <ion-label stacked class="large_label">{{m.name}}</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-item>
+          <ion-label stacked class="large_label">Annual</ion-label>
+          <ion-input type="text" disabled></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row style="padding-left: 10px;padding-top: 10px; font-weight: 600">Ground water pumped outside the Command Area and then brought into the command area.</ion-row>
+      <ion-item>
+        <ion-input type="text" placeholder="Name"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col col-4 *ngFor="let m of months">
+          <ion-item>
+            <ion-label stacked class="large_label">{{m.name}}</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-item>
+          <ion-label stacked class="large_label">Annual</ion-label>
+          <ion-input type="text" disabled></ion-input>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+  </ion-list> -->
+
+
+
+</ion-content>

@@ -1,0 +1,71 @@
+<!--
+  Generated template for the ProjectNewPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>MASSCOTE</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content style="background: url('assets/imgs/bg_img.jpeg'); background-size:cover">
+  <form #f="ngForm" (ngSubmit)="saveProject(f)">
+    <ion-list class="input_box">
+      <ion-item>
+        <ion-label stacked class="large_label">Project Name </ion-label>
+        <ion-input type="text" name="name" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="large_label">Water Year </ion-label>
+        <ion-input type="text" name="water_year" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="large_label">Total Project area (command and non-command) </ion-label>
+        <ion-input type="text" name="total_proj_area"  ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="large_label">Command area - area with irrig. facilities </ion-label>
+        <ion-input type="text" name="cmd_area" ngModel></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked class="large_label">Estimated conveyance efficiency for external water </ion-label>
+        <ion-input type="text" name="ECe_ext_water" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="large_label">Est. convey. effic. for internal project recirculation </ion-label>
+        <ion-input type="text" name="Ece_int_proj" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="large_label">Estimated seepage (deep perc.) for paddy rice</ion-label>
+        <ion-input type="text" name="Est_seePage" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="large_label">Estimated surface losses from paddy rice to drains</ion-label>
+        <ion-input type="text" name="Est_surfaceLoss" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="large_label">Estimated field irrigation efficiency for other crops </ion-label>
+        <ion-input type="text" name="Est_field_irr" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="large_label">Flow rate capacity of main canal(s) at diversion point(s) </ion-label>
+        <ion-input type="text" name="frc_mainCanal" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="large_label">Actual Peak flow rate into the main canal(s) at the diversion point(s)</ion-label>
+        <ion-input type="text" name="actual_frc_mainCanal" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="large_label">Average ECe of the Irrigation Water</ion-label>
+        <ion-input type="text" name="avg_irr_water" ngModel></ion-input>
+      </ion-item>
+      <button ion-button type="submit" [disabled]="!f.valid">
+        Save
+      </button>
+    </ion-list>
+  </form>
+</ion-content>

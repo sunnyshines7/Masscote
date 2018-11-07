@@ -1,0 +1,43 @@
+<ion-content style="background: url('assets/imgs/bg_img.jpeg'); background-size:cover">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <form #f="ngForm" (ngSubmit)="onSignIn(f)">
+          <img src="./assets/imgs/logo_mas.png" class="img-responsive site-logo" />
+          <ion-item *ngIf="formType=='register'">
+            <ion-input placeholder="Name" name="name" clearInput ngModel></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input placeholder="Email Id" name="email_id" type="email" clearInput ngModel></ion-input>
+          </ion-item>
+          <ion-item *ngIf="formType!='forgotPassword'">
+            <ion-input placeholder="Password" name="auth" clearInput ngModel type="password"></ion-input>
+          </ion-item>
+          
+          <button class="btn-action" type="submit">
+              {{ formType=='register' ? "Register" : (formType=='login' ? 'Login' : 'Reset Password') }}
+          </button>
+
+          <!-- <a class="btn-action" (click)="triggerAuthAction()">
+            {{ formType=='register' ? "Register" : (formType=='login' ? 'Login' : 'Reset Password') }}
+          </a> -->
+          
+          <a (click)="changeForm('forgotPassword')" class="text-btn" *ngIf="formType=='login'"> Forgot Password ? </a>
+          
+          <a (click)="changeForm('register')" class="text-btn" *ngIf="formType=='login'"> New Member? Signup </a>
+          
+          <a (click)="changeForm('login')" class="text-btn" *ngIf="formType=='register'"> Already Registered? Login </a>
+          
+          <a (click)="changeForm('login')" class="text-btn" *ngIf="formType=='forgotPassword'"> Back to Login </a>
+          <ion-item class="spns_logo_text">
+            <p class="text-btn">Sponsered by</p>
+          </ion-item>
+          <ion-item class="spns_logo">
+            <img src="./assets/imgs/logo_karataka.png" item-start>
+            <img src="./assets/imgs/logo_kar.png" item-end> 
+          </ion-item>  
+      </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,76 @@
+<!--
+  Generated template for the VideoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Video</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content style="background: url('assets/imgs/bg_img.jpeg'); background-size:cover">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 class="btn-group-or">
+        <button ion-button icon-start style="width: 100%" class="cond_btn1">
+          <ion-icon name="videocam"></ion-icon>
+          Record
+        </button>
+        <button ion-button icon-start style="width: 100%" class="cond_btn2">
+            <ion-icon name="image"></ion-icon>
+            Open Gallery
+          </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  <ion-list class="list_border">
+    <ion-list-header>
+      List of Video File Uploaded
+    </ion-list-header>
+    <ion-item-sliding>
+      <ion-item>
+        <h2>Video1</h2>
+        <p item-start class="play"><ion-icon name="play"></ion-icon></p>
+        <p item-end style="margin: 0px">3.45</p>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="danger">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item-sliding>
+      <ion-item>
+        <h2>Video2</h2>
+        <p item-start class="play"><ion-icon name="play"></ion-icon></p>
+        <p item-end style="margin: 0px">3.45</p>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="danger">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item-sliding>
+      <ion-item>
+        <h2>Video3</h2>
+        <p item-start class="play"><ion-icon name="play"></ion-icon></p>
+        <p item-end style="margin: 0px">3.45</p>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="danger">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,26 @@
+<!-- Generated template for the ChildViewComponent component -->
+<!-- <p class="large_label">Stated conveyance efficiency of imported canal water (accounts for seepage and spills and tail end flows)(%)</p> -->
+<p class="large_label">{{desc_name}}</p>
+<ion-grid>
+  <ion-row>
+    <ion-col col-4>
+      <ion-item>
+        <ion-label stacked class="large_label">Year {{project.water_year}}</ion-label>
+        <ion-label class="referText">{{value1}}</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col col-4>
+      <ion-item>
+        <ion-label stacked class="large_label">Value used</ion-label>
+        <ion-label class="referText">{{value1}}</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col col-4>
+      <ion-item>
+        <ion-label stacked class="large_label">Est. CI</ion-label>
+        <ion-input type="text" name="input_value" [(ngModel)]="input_value" (keyup)="inputChanged()" (focus)="updateValue($event)" value="0" *ngIf="isInput"></ion-input>
+        <ion-label class="referText" *ngIf="!isInput">{{value2}}</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>

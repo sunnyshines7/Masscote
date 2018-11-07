@@ -1,0 +1,41 @@
+<!--
+  Generated template for the AnalyticsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>RAP Sheets</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content style="background: url('assets/imgs/bg_img.jpeg'); background-size:cover">
+  <p class="card_head">
+    {{project.name}}
+  </p>
+  <ion-list class="accordion-list">
+    <!-- First Level -->
+    <ion-list-header *ngFor="let item of information; let i = index" no-lines no-padding >
+      <!-- Toggle Button -->
+      <button ion-item (click)="toggleSection(i+3, item.name)" detail-none [ngClass]="{'section-active': item.open, 'section': !item.open}" style="background-color: transparent; color: #fff">
+        <ion-icon item-left name="arrow-forward" class="arrow-right" *ngIf="!item.open"></ion-icon>
+        <ion-icon item-left name="arrow-down" class="arrow-down-grad"  *ngIf="item.open"></ion-icon>
+          {{ item.name }}
+      </button>
+
+      <ion-list *ngIf="item.children && item.open" no-lines class="item_list">
+        <div *ngFor="let item of item.children; let j = index">
+          <ion-item detail-none class="child-item" text-wrap (click)="goTo((i+3)+'-'+(j+1), item.name)">
+            <ion-icon item-left name="arrow-forward" class="arrow-right-child" *ngIf="!item.open"></ion-icon>
+            <h2 style="text-transform: initial; color: #fff">{{ item.name }}</h2>
+            <ion-icon name="checkmark-circle" item-right style="color:#797979"></ion-icon>
+          </ion-item>
+        </div>
+      </ion-list>
+    </ion-list-header>
+  </ion-list>
+</ion-content>

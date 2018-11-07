@@ -1,0 +1,88 @@
+page-home {
+	.card {
+		ion-card {
+			margin: 0px;
+			width: 100%;
+			height: 175px;
+			// border: 1px inset;
+			border-radius: 10px;
+			box-shadow: 0px 0px 12px rgba(12, 13, 10, 0.1);
+			background: none !important;
+		}
+		ion-item {
+			text-align: center;
+			vertical-align: middle;
+			height: 175px;
+			color: #000;
+    	background-color: rgba(115, 228, 69, 0.29);
+		}
+		ion-icon {
+			font-size: 3em;
+		}
+		ion-col {
+			padding: 8px;
+		}
+		ion-label {
+			margin: 11px 8px 11px 0;
+			font-weight: 700;
+			color: #fff;
+		}
+	}
+	.icon_img {
+		background: url(../assets/icon/images1.png) no-repeat center center;
+    height: 90px;
+    // width: 90px;
+		background-size: contain;
+		margin-bottom: 10px;
+	}
+	.icon_audio {
+		background: url(../assets/icon/audio1.png) no-repeat center center;
+    height: 90px;
+    // width: 90px;
+    background-size: contain;
+		margin-bottom: 10px;
+	}
+	.icon_video {
+		background: url(../assets/icon/video1.png) no-repeat center center;
+    height: 90px;
+    // width: 90px;
+    background-size: contain;
+		margin-bottom: 10px;
+	}
+	.icon_analytics {
+		background: url(../assets/icon/charts1.png) no-repeat center center;
+    height: 90px;
+    // width: 90px;
+    background-size: contain;
+		margin-bottom: 10px;
+	}
+	.icon_rap {
+		background: url(../assets/icon/xsl1.png) no-repeat center center;
+    height: 90px;
+    // width: 90px;
+    background-size: contain;
+		margin-bottom: 10px;
+	}
+}
+
+ion-title {
+	text-align: center;
+	margin-right: 16%;
+}
+
+.ion-md-arrow-forward:before {
+	content: "\f3d1";
+}
+.ion-md-arrow-down:before {
+	content: "\f3d0";
+}
+.ion-md-arrow-back:before {
+	content: "\f3cf";
+}
+.toolbar-background {
+	background: rgba(115, 228, 69, 0.2);
+}
+.toolbar-title{
+	font-size: 2.2rem;
+}
+

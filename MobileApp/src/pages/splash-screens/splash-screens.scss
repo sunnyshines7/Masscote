@@ -1,0 +1,23 @@
+page-splash-screens {
+	.sp_img ion-slide {
+		background-position: center !important;
+		background-repeat: no-repeat !important;
+		background-size: cover !important;
+		h2 {
+			position: absolute;
+			top: 20%;
+			text-align: center;
+			width: 100%;
+			color: #fff;
+		}
+	}
+	.skip {
+    bottom: 30px;
+    position: absolute;
+    right: 20px;
+    padding: 8px 13px;
+    color: #fff;
+    background: none;
+    font-size: 0.9em;
+	}
+}

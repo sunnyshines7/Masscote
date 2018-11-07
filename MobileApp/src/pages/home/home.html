@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title style="margin-right: 0px;">
+      MASSCOTE
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="background: url('assets/imgs/bg_img.jpeg'); background-size:cover">
+  <ion-grid >
+    <ion-row class="card">
+      <ion-col col-12>
+        <ion-card (tap)="tapEvent(analyticsPage)">
+          <ion-item>
+            <div class="icon_rap">
+              <!-- <ion-icon name="images"></ion-icon> -->
+            </div>  
+            RAP Sheets
+          </ion-item>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card (tap)="tapEvent(photosPage)">
+          <ion-item>
+            <div class="icon_img">
+              <!-- <ion-icon name="images"></ion-icon> -->
+            </div>  
+            Images
+          </ion-item>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card (tap)="tapEvent(audioPage)">
+          <ion-item>
+            <div class="icon_audio">
+              <!-- <ion-icon name="headset"></ion-icon> -->
+            </div>  
+            Audio
+          </ion-item>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card (tap)="tapEvent(videoPage)">
+          <ion-item>
+            <div class="icon_video">
+              <!-- <ion-icon name="film"></ion-icon>  -->
+            </div>
+            Video
+          </ion-item>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card>
+          <ion-item>
+            <div class="icon_analytics">
+              <!-- <ion-icon name="stats"></ion-icon> -->
+            </div>
+            Documents
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+</ion-content>

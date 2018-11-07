@@ -1,0 +1,23 @@
+page-project-new {
+	.input_box {
+		text-align: center;
+		ion-item {
+			border-bottom: 0 !important;
+			border-top: 0 !important;
+			background-color: transparent;
+		}
+		ion-input {
+			background-color: #fff; 
+		}
+		ion-label {
+			font-size: 1.6rem !important;
+    	font-weight: 500;
+			white-space: inherit;
+		}
+		button {
+			margin-top: 30px;
+			width: 80%;
+			background-image: linear-gradient(141deg, #ffc444 0%, #f89d42 51%, #66ac4a 75%);
+		}
+	}
+}
